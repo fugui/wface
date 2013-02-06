@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>紫茄子英语听力基地</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Le styles -->
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+</style>
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<link rel="shortcut icon" href="bootstrap/ico/favicon.png">
+</head>
+
+<body>
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+				</a> <a class="brand" href="#">紫茄子英语听力基地</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="#contact">Contact</a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li class="nav-header">Nav header</li>
+								<li><a href="#">Separated link</a></li>
+								<li><a href="#">One more separated link</a></li>
+							</ul></li>
+					</ul>
+					<form class="navbar-form pull-right">
+						<input class="span2" type="text" placeholder="Email"> <input class="span2" type="password"
+							placeholder="Password">
+						<button type="submit" class="btn">Sign in</button>
+					</form>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+
+		<h2>Dictation 英语听写训练</h2>
+		<p>听写是快速提升英语听力的有力手段，同时还能够提升词汇量、语法、写作等全方面的英语能力.</p>
+		<div class="row-fluid">
+			<div class="span8 offset2">
+				<audio id="player" controls class="row-fluid" ontimeupdate="audioTimeUpdate()"></audio>
+				<p id="line" align="center"></p>
+				<textarea id="dictate" name="dictate" class="row-fluid" rows="20"></textarea>
+			</div>
+		</div>
+
+		<hr>
+
+		<footer>
+			<p>&copy; Company 2012</p>
+		</footer>
+
+	</div>
+	<!-- /container -->
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="bootstrap/js/jquery-1.9.0.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script>
+		function jPlayer()
+		{
+			
+			function play()
+			{
+			}
+
+		}
+
+		$.ready()
+		{
+			var data = {
+				audioFile : "mp3/NCE2002.mp3",
+				lrc : [ {
+					during : [ 0, 2000 ],
+					alt : "This is the first music",
+					tips : "first"
+				}, {
+					during : [ 2000, 7000 ],
+					alt : "This is the first music"
+				} ]
+			};
+
+			$("#player").get(0).src = data.audioFile;
+			$("#player").get(0).preload = "auto";
+
+			$(window).keydown(function() {
+				if (event.keyCode == 219) {
+					document.getElementById('player').play();
+					event.preventDefault();
+				} else if (event.keyCode == 221) {
+					document.getElementById('player').pause();
+					event.preventDefault();
+				}
+			});
+		}
+
+		function getCurrentLine(tt) {
+			for (i = 0; i < data.lrc.length; i++) {
+				if( tt >= data.lrc[i].during[0] &&  tt <= data.lrc[i].during[1])
+					return data.lrc[i];
+				if( tt <= data.lrc[i].during[0] )
+					break;
+			}
+		}
+
+		function audioTimeUpdate() {
+			currentLine = getCurrentLine( $("#player").get(0).currentTime * 1000 );
+			if( currentLine === undefined )
+				$("#line").html( "" );
+			else
+				$("#line").html( currentLine.alt );
+		}
+	</script>
+
+</body>
+</html>
